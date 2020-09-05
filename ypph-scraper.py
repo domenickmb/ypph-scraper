@@ -100,8 +100,8 @@ def display_banner():
     print("|    | |_| | |_) | |_) | | | |_____\__ \ (__| | | (_| | |_) |  __/ |      |")
     print("|     \__, | .__/| .__/|_| |_|     |___/\___|_|  \__,_| .__/ \___|_|      |")
     print("|     |___/|_|   |_|                                  |_|                 |")
-    print("|                   Yellow Pages Philippinses Scraper                     |")
-    print("|                          (yellow-pages.ph)                              |")
+    print("|                    Yellow Pages Philippines Scraper                     |")
+    print("|                           (yellow-pages.ph)                             |")
     print("o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o")
 
 
