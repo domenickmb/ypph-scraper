@@ -39,12 +39,10 @@ class YellowpagesItem(scrapy.Item):
 class YellowpagesSpider(scrapy.Spider):
     name = 'yellowpages'
     custom_settings = {
-        'BOT_NAME': 'yellowpages',
         'USER_AGENT': 'Googlebot',
         'ROBOTSTXT_OBEY': True,
-        'AUTOTHROTTLE_DEBUG': True,
-        'DOWNLOAD_DELAY': 1.75
-
+        'DOWNLOAD_DELAY': 1.8,
+        'LOG_FILE': 'debug.log',
     }
 
     def start_requests(self):
@@ -63,6 +61,10 @@ class YellowpagesSpider(scrapy.Spider):
         yield from response.follow_all(pagination_links, self.parse)
 
     def parse_details(self, response):
+        # Skip if not on the business page
+        if not response.url.startswith('https://www.yellow-pages.ph/business'):
+            return None
+
         business_name = response.css('.header-name-container h1::text').get().strip()
         address = response.css('div.icon-name a.biz-link::text').get().strip()
         landline = response.css('.more-landline-container span.phn-txt::text').getall()
