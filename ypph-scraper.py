@@ -41,8 +41,8 @@ class YellowpagesSpider(scrapy.Spider):
     custom_settings = {
         'USER_AGENT': 'Googlebot',
         'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_DELAY': 1.8,
-        'LOG_FILE': 'debug.log',
+        'DOWNLOAD_DELAY': 2,
+        'CONCURREN_REQUEST_PER_IP': 8,
     }
 
     def start_requests(self):
@@ -195,12 +195,14 @@ def runscrapy(selection, filename):
     subprocess.call(['sleep', '1'])
     print(f"[+] Scraping business details under '{selection.name}' category...")
     subprocess.call(['sleep', '1'])
-    category = selection.get_category()
+    YellowpagesSpider.category = selection.get_category()
     feed_format = filename.split('.')[-1]
-    YellowpagesSpider.category = category
-    YellowpagesSpider.custom_settings['FEED_URI'] = filename
-    YellowpagesSpider.custom_settings['FEED_FORMAT'] = feed_format
-    process = CrawlerProcess()
+
+    process = CrawlerProcess(settings={
+        'FEEDS': {
+            filename: {'format': feed_format}
+        }
+    })
     process.crawl(YellowpagesSpider)
     process.start()
     print(f"Extracted data saved to: '{filename}'")
